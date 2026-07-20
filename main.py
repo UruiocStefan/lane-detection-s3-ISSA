@@ -47,6 +47,10 @@ while True:
     top_down = cv2.warpPerspective(road, magic_matrix, (width, height))
     cv2.imshow('Top-Down', top_down)
 
+    # Exercitiul 6: adaugam putin blur
+    blurred = cv2.blur(top_down, ksize=(5, 5))
+    cv2.imshow('Blur', blurred)
+
     cv2.imshow('Original', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
