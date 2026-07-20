@@ -4,35 +4,38 @@ import numpy as np
 cam = cv2.VideoCapture('Lane Detection Test Video 01.mp4')
 
 while True:
-
     ret, frame = cam.read()
-
-    # ret (bool): Return code of the `read` operation. Did we get an image or not?
-    #             (if not maybe the camera is not detected/connected etc.)
-
-    # frame (array): The actual frame as an array.
-    #                Height x Width x 3 (3 colors, BGR) if color image.
-    #                Height x Width if Grayscale
-    #                Each element is 0-255.
-    #                You can slice it, reassign elements to change pixels, etc.
 
     if ret is False:
         break
+
+    # Exercitiul 2: micsoram cadrul
     height, width, _ = frame.shape
     frame = cv2.resize(frame, (width // 2, height // 2))
     cv2.imshow('Small', frame)
     height, width, _ = frame.shape
-    gray_frame = np.zeros((height, width), dtype=np.uint8)
 
+    # Exercitiul 3: convertim cadrul la grayscale
+    gray_frame = np.zeros((height, width), dtype=np.uint8)
     for row in range(height):
         for col in range(width):
             b, g, r = frame[row, col]
             gray_frame[row, col] = (int(b) + int(g) + int(r)) // 3
-
     cv2.imshow('Grayscale', gray_frame)
 
-    cv2.imshow('Original', frame)
+    # Exercitiul 4: selectam doar drumul (trapezoid)
+    upper_left = (int(width * 0.45), int(height * 0.75))
+    upper_right = (int(width * 0.55), int(height * 0.75))
+    lower_left = (0, height)
+    lower_right = (width, height)
+    trapezoid_bounds = np.array([upper_right, upper_left, lower_left, lower_right], dtype=np.int32)
+    trapezoid_frame = np.zeros((height, width), dtype=np.uint8)
+    cv2.fillConvexPoly(trapezoid_frame, trapezoid_bounds, 1)
+    cv2.imshow('Trapezoid', trapezoid_frame * 255)
+    road = gray_frame * trapezoid_frame
+    cv2.imshow('Road', road)
 
+    cv2.imshow('Original', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
