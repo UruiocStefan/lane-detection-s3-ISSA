@@ -1,5 +1,5 @@
 import cv2
-
+import numpy as np
 
 cam = cv2.VideoCapture('Lane Detection Test Video 01.mp4')
 
@@ -21,6 +21,15 @@ while True:
     height, width, _ = frame.shape
     frame = cv2.resize(frame, (width // 2, height // 2))
     cv2.imshow('Small', frame)
+    height, width, _ = frame.shape
+    gray_frame = np.zeros((height, width), dtype=np.uint8)
+
+    for row in range(height):
+        for col in range(width):
+            b, g, r = frame[row, col]
+            gray_frame[row, col] = (int(b) + int(g) + int(r)) // 3
+
+    cv2.imshow('Grayscale', gray_frame)
 
     cv2.imshow('Original', frame)
 
