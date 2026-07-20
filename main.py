@@ -35,6 +35,18 @@ while True:
     road = gray_frame * trapezoid_frame
     cv2.imshow('Road', road)
 
+    # Exercitiul 5: vedere de sus
+    screen_upper_left = (0, 0)
+    screen_upper_right = (width, 0)
+    screen_lower_left = (0, height)
+    screen_lower_right = (width, height)
+
+    frame_bounds = np.array([screen_upper_right, screen_upper_left, screen_lower_left, screen_lower_right],dtype=np.float32)
+    trapezoid_bounds_float = np.float32(trapezoid_bounds)
+    magic_matrix = cv2.getPerspectiveTransform(trapezoid_bounds_float, frame_bounds)
+    top_down = cv2.warpPerspective(road, magic_matrix, (width, height))
+    cv2.imshow('Top-Down', top_down)
+
     cv2.imshow('Original', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
