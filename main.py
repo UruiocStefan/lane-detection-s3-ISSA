@@ -51,6 +51,21 @@ while True:
     blurred = cv2.blur(top_down, ksize=(5, 5))
     cv2.imshow('Blur', blurred)
 
+    # Exercitiul 7: detectare muchii cu filtrul Sobel
+    sobel_vertical = np.float32([[-1, -2, -1],
+                                 [0, 0, 0],
+                                 [1, 2, 1]])
+
+    sobel_horizontal = np.transpose(sobel_vertical)
+    blurred_float = np.float32(blurred)
+    sobel_v_result = cv2.filter2D(blurred_float, -1, sobel_vertical)
+    sobel_h_result = cv2.filter2D(blurred_float, -1, sobel_horizontal)
+
+    cv2.imshow('Sobel Vertical', cv2.convertScaleAbs(sobel_v_result))
+    cv2.imshow('Sobel Horizontal', cv2.convertScaleAbs(sobel_h_result))
+    combined = np.sqrt(sobel_v_result ** 2 + sobel_h_result ** 2)
+    cv2.imshow('Sobel', cv2.convertScaleAbs(combined))
+
     cv2.imshow('Original', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
