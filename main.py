@@ -24,8 +24,8 @@ while True:
     cv2.imshow('Grayscale', gray_frame)
 
     # Exercitiul 4: selectam doar drumul (trapezoid)
-    u
-    pper_left = (int(width * 0.45), int(height * 0.75))
+
+    upper_left = (int(width * 0.45), int(height * 0.75))
     upper_right = (int(width * 0.55), int(height * 0.75))
     lower_left = (0, height)
     lower_right = (width, height)
