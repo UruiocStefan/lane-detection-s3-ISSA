@@ -66,6 +66,14 @@ while True:
     combined = np.sqrt(sobel_v_result ** 2 + sobel_h_result ** 2)
     cv2.imshow('Sobel', cv2.convertScaleAbs(combined))
 
+    # Exercitiul 8: binarizam imaginea (threshold)
+    sobel_uint8 = cv2.convertScaleAbs(combined)
+    threshold = int(255 / 2)
+    binarized = np.zeros_like(sobel_uint8)
+    binarized[sobel_uint8 > threshold] = 255
+
+    cv2.imshow('Binarized', binarized)
+
     cv2.imshow('Original', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
