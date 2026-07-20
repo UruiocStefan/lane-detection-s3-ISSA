@@ -24,7 +24,8 @@ while True:
     cv2.imshow('Grayscale', gray_frame)
 
     # Exercitiul 4: selectam doar drumul (trapezoid)
-    upper_left = (int(width * 0.45), int(height * 0.75))
+    u
+    pper_left = (int(width * 0.45), int(height * 0.75))
     upper_right = (int(width * 0.55), int(height * 0.75))
     lower_left = (0, height)
     lower_right = (width, height)
@@ -148,6 +149,7 @@ while True:
     if len(right_line_points) > 0:
         final_frame[right_line_points[:, 0], right_line_points[:, 1]] = (50, 250, 50)
 
+    # Exercitiul 12
     cv2.imshow('Final', final_frame)
 
     cv2.imshow('Original', frame)
