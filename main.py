@@ -74,6 +74,22 @@ while True:
 
     cv2.imshow('Binarized', binarized)
 
+   # Exercitiul 9: coordonatele marcajelor (stanga/dreapta)
+    cleaned = binarized.copy()
+    margin = int(width * 0.05)
+    cleaned[:, :margin] = 0
+    cleaned[:, width - margin:] = 0
+    cv2.imshow('Cleaned', cleaned)
+
+    left_half = cleaned[:, :width // 2]
+    right_half = cleaned[:, width // 2:]
+    left_points = np.argwhere(left_half > 0)
+    right_points = np.argwhere(right_half > 0)
+    left_ys = left_points[:, 0]
+    left_xs = left_points[:, 1]
+    right_ys = right_points[:, 0]
+    right_xs = right_points[:, 1] + width // 2
+
     cv2.imshow('Original', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
