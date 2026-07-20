@@ -115,7 +115,6 @@ while True:
 
         if -10 ** 8 < right_top_x < 10 ** 8:
             right_top = (int(right_top_x), int(right_top_y))
-        if -10 ** 8 < right_bottom_x < 10 ** 8:
             right_bottom = (int(right_bottom_x), int(right_bottom_y))
 
     lines_frame = cleaned.copy()
