@@ -2,7 +2,10 @@ import cv2
 import numpy as np
 
 cam = cv2.VideoCapture('Lane Detection Test Video 01.mp4')
-
+left_top = (0, 0)
+left_bottom = (0, 0)
+right_top = (0, 0)
+right_bottom = (0, 0)
 while True:
     ret, frame = cam.read()
 
@@ -89,6 +92,36 @@ while True:
     left_xs = left_points[:, 1]
     right_ys = right_points[:, 0]
     right_xs = right_points[:, 1] + width // 2
+
+    # Exercitiul 10: gasim liniile prin regresie si le desenam
+    if len(left_xs) > 0:
+        left_b, left_a = np.polynomial.polynomial.polyfit(left_xs, left_ys, deg=1)
+        left_top_y = 0
+        left_bottom_y = height
+        left_top_x = (left_top_y - left_b) / left_a
+        left_bottom_x = (left_bottom_y - left_b) / left_a
+
+        if -10 ** 8 < left_top_x < 10 ** 8:
+            left_top = (int(left_top_x), int(left_top_y))
+        if -10 ** 8 < left_bottom_x < 10 ** 8:
+            left_bottom = (int(left_bottom_x), int(left_bottom_y))
+
+    if len(right_xs) > 0:
+        right_b, right_a = np.polynomial.polynomial.polyfit(right_xs, right_ys, deg=1)
+        right_top_y = 0
+        right_bottom_y = height
+        right_top_x = (right_top_y - right_b) / right_a
+        right_bottom_x = (right_bottom_y - right_b) / right_a
+
+        if -10 ** 8 < right_top_x < 10 ** 8:
+            right_top = (int(right_top_x), int(right_top_y))
+        if -10 ** 8 < right_bottom_x < 10 ** 8:
+            right_bottom = (int(right_bottom_x), int(right_bottom_y))
+
+    lines_frame = cleaned.copy()
+    cv2.line(lines_frame, left_top, left_bottom, (200, 0, 0), 5)
+    cv2.line(lines_frame, right_top, right_bottom, (100, 0, 0), 5)
+    cv2.imshow('Lines', lines_frame)
 
     cv2.imshow('Original', frame)
     if cv2.waitKey(1) & 0xFF == ord('q'):
